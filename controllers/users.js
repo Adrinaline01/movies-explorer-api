@@ -43,7 +43,8 @@ const createUser = (req, res, next) => {
             next(error);
           }
         });
-    });
+    })
+    .catch(next);
 };
 
 const login = (req, res, next) => {
@@ -69,7 +70,10 @@ const login = (req, res, next) => {
               httpOnly: true,
               sameSite: true,
             });
-            res.send({ data: user.toJSON() });
+            res.send({
+              name: user.name,
+              email: user.email,
+            });
           } else {
             next(new ErrorAuth(ERROR_INCORRECT_USER_DATA_LOGIN));
           }
@@ -95,6 +99,8 @@ const updateUser = (req, res, next) => {
     .catch((error) => {
       if (error.name === 'ValidationError') {
         next(new ErrorBadReq(ERROR_USER_UPDATE));
+      } else if (error.code === 11000) {
+        next(new ErrorConflict(ERROR_USER_EMAIL_EXIST));
       } else {
         next(error);
       }
