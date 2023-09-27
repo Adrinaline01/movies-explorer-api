@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
-const errors = require('celebrate');
+const { errors } = require('celebrate');
 const cors = require('cors');
 
 const {
