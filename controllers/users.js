@@ -32,7 +32,6 @@ const createUser = (req, res, next) => {
           res.status(CREATED).send({
             name: user.name,
             email: user.email,
-            _id: user._id,
           });
         })
         .catch((error) => {

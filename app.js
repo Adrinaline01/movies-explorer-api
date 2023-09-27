@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const { celebrate, Joi, errors } = require('celebrate');
-// const cors = require('cors');
+const cors = require('cors');
 const auth = require('./middlewares/auth');
 
 const app = express();
@@ -16,6 +16,14 @@ const ErrorNotFound = require('./errors/error-not-found');
 const errorCentral = require('./middlewares/error-central');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { ERROR_PAGE_NOT_FOUND } = require('./utils/constants');
+
+app.use(cors({
+  origin: ['http://localhost:3000', 'http://localhost:3001', 'http://adrinalinediploma.nomoredomainsrocks.ru', 'https://adrinalinediploma.nomoredomainsrocks.ru'],
+  methods: ['GET', 'PUT', 'POST', 'PATCH', 'DELETE'],
+  credentials: true,
+  optionsSuccessStatus: 200,
+  maxAge: 30,
+}));
 
 mongoose.connect('mongodb://0.0.0.0:27017/bitfilmsdb');
 
